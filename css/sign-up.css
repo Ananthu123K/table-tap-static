@@ -1,0 +1,184 @@
+/* Imports */
+
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Hind:wght@300;400;500;600;700&family=Ribeye+Marrow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arimo", sans-serif;
+    overflow-x: hidden;
+}
+
+.hero {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Navbar */
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.heading {
+    font-family: "Anton", sans-serif;
+    font-size: 2rem;
+}
+
+.heading span {
+    color: #ffc000;
+    font-family: "Anton", sans-serif;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-list li {
+    list-style: none;
+    padding: 0 20px;
+    transition: all 0.2s ease-in;
+}
+
+.item {
+    text-decoration: none;
+    color: black;
+    transition: all 0.2s ease-in;
+}
+
+.item:hover {
+    color: #ffc000;
+}
+
+.nav-list li:hover {
+    transform: scale(0.9);
+}
+
+.nav-button {
+    text-decoration: none;
+    color: white;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #ffc000;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+    transform: scale(0.9);
+}
+
+
+/* Hero */
+
+.hero {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 0 50px;
+    width: 100vw;
+    height: 100vh;
+}
+
+.hero-right {
+    width: 50vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-right: 10vw;
+}
+
+.auth-illus {
+    width: 500px;
+}
+
+.sign-in-heading {
+    font-family: "Roboto Mono", monospace;
+    margin: 20px 0;
+}
+
+.hero-left {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    justify-content: center;
+    padding-left: 10vw;
+}
+
+.hero-left label {
+    margin: 20px 0;
+    color: #8c8c9a;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero-left input {
+    width: 25vw;
+    border: #b3b3b3 2px solid;
+    padding: 20px 10px;
+    outline: none;
+    border-radius: 3px;
+}
+
+.sub-heading-sign-in {
+    margin: 20px 0;
+}
+
+.btn-sign {
+    width: 10vw;
+}
+
+.sign_in {
+    color: white;
+    text-decoration: none;
+}
+
+
+
+#loading-overlay {
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    text-align: center;
+    line-height: 100vh;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    user-select: none;
+}
+
+
+#loading-overlay p {
+    font-size: 3rem;
+}
+
+.fade-out {
+    opacity: 50;
+    transition: opacity 0.5s ease-in-out;
+}
+
+
+.loading {
+    font-size: 2rem;
+    position: absolute;
+    top: 50vh;
+    left: 44vw;
+}
+
+button {
+    cursor: pointer;
+}

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/profile.css" />
+    <title>Profile | TableTap</title>
+    <script>
+      const orders = JSON.parse(`{{ data|tojson }}`);
+      console.log(orders);
+    </script>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div id="#modal-content" class="modal-content"></div>
+    </div>
+    <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+          </button>
+        </div>
+        {% else %}
+        <div class="button-list-navbar">
+          <button onclick="window.location.href = '/sign_in'" class="btn">
+            <a href="#" class="nav-button btn">Sign In</a>
+          </button>
+        </div>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="main">
+      <div class="profile">
+        <div class="encloser">
+          <div class="headings">
+            <h1 class="name-heading info">Name: {{ display_name}}</h1>
+            <h2 class="email-heading info">Email: {{ email }}</h2>
+          </div>
+          <button id="sign_out" class="btn">Sign out</button>
+        </div>
+      </div>
+      <div class="main-right">
+        <h1 class="heading-right">Bookings</h1>
+        <div class="line line-special"></div>
+      </div>
+    </div>
+  </body>
+  <script>
+    let modal = document.getElementById("myModal");
+
+    function close() {
+      modal.style.display = "none";
+    }
+
+    window.onclick = function (event) {
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    };
+    const container = document.querySelector(".main-right");
+
+    let cancel_exists = false;
+    let delete_exists = false;
+
+    function status(data) {
+      if (data == "pending") {
+        return `<div class="order-person-pen">
+              <h3 class="order-person-name">Order Pending</h3>
+            </div>`;
+      } else if (data == "completed") {
+        return `<div class="order-person-com">
+              <h3 class="order-person-name">Order Completed</h3>
+            </div>`;
+      } else {
+        return `<div class="order-person-can">
+              <h3 class="order-person-name">Order Canceled</h3>
+            </div>`;
+      }
+    }
+
+    function cancel_button(data) {
+      if (data == "pending") {
+        cancel_exists = true;
+        return `<button class="cancel_button btn">Cancel</button>`;
+      } else {
+        delete_exists = true;
+        return `<button class="delete_button btn">Delete</button>`
+      }
+    }
+
+    orders.forEach((order) => {
+      let content = `
+      <div id="${order["order_id"]}" class="main-right-group">
+          <div class="main-right-details">
+            <h3 class="main-right-heading">${formatDate(order["date"])} - ${
+        order["time_from"]
+      } - 6 Seats</h3>
+            <h3 class="main-right-heading">${order["res_name"]}</h3>
+            ${status(order["status"])}
+          </div>
+          <div class="main-right-action">
+            ${cancel_button(order["status"])}
+            <div class="price">
+              <h3 class="price-info">Pay</h3>
+              <h3 class="price-amount">₹${order["price"]}</h3>
+            </div>
+          </div>
+        </div>
+        <div class="line"></div>
+      `;
+      container.innerHTML += content;
+    });
+
+    function formatDate(dateString) {
+      // Create a new Date object from the input string
+      const date = new Date(dateString);
+
+      // Define an array of month names
+      const monthNames = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+
+      // Get the day, month, and year from the Date object
+      const day = String(date.getDate()).padStart(2, "0"); // Ensure two digits
+      const month = monthNames[date.getMonth()];
+      const year = date.getFullYear();
+
+      // Return the formatted date string
+      return `${day} ${month} ${year}`;
+    }
+
+    // Add an event listener to the sign out button
+    document.querySelector("#sign_out").addEventListener("click", () => {
+      // Send a POST request to the sign out endpoint
+      fetch("/sign_out", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }).then((response) => {
+        // If the response is successful, redirect the user to the home page
+        if (response.status == 200) {
+          alert("Succesfully Signed Out!");
+          window.location.href = "/";
+        }
+      });
+    });
+
+    if (cancel_exists) {
+      let cancel_buttons = document.querySelectorAll(".cancel_button");
+      cancel_buttons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          modal.style.display = "block";
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">Cancelling...</div>
+        </div>`;
+          id = e.target.parentNode.parentNode.id;
+          data = {
+            id: id,
+          };
+          fetch("/cancel_order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              modal.style.display = "block";
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+        console.log(data)
+        if (data.status) {
+          window.location.reload()
+        }
+            });
+        });
+      });
+    }
+
+    if (delete_exists) {
+      console.log("Hello?")
+      let delete_buttons = document.querySelectorAll(".delete_button");
+      delete_buttons.forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          modal.style.display = "block";
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">Deleting....</div>
+        </div>`;
+          console.log("Hello again?")
+          id = e.target.parentNode.parentNode.id;
+          data = {
+            id: id,
+          };
+          fetch("/delete_order", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              modal.style.display = "block";
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+        console.log(data)
+        if (data.status) {
+          window.location.reload()
+        } else {
+          modal.style.display = "none";
+        }
+            });
+        });
+      });
+    }
+  </script>
+</html>

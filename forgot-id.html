@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/forgot-id.css" />
+    <title>Forgot Restaurant ID!</title>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <div id="#modal-content" class="modal-content">
+        <div class="heading-content"></div>
+      </div>
+    </div>
+    <nav class="navbar">
+      <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+      <ul class="nav-list">
+        <li><a href="/" class="item">Home</a></li>
+        <li><a href="/booking" class="item">Book Now</a></li>
+        <li><a href="/contact" class="item">Contact Us</a></li>
+        <li><a href="/res_sign" class="item">Dashboard</a></li>
+      </ul>
+      <div class="button-list-navbar">
+        {% if signed_in %}
+        <button class="btn">
+          <a href="/profile" class="nav-button btn">{{ display_name }}</a>
+        </button>
+        {% else %}
+        <button class="btn">
+          <a href="/sign_in" class="nav-button btn">Sign In</a>
+        </button>
+        {% endif %}
+      </div>
+    </nav>
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="heading sign-in-heading">Forgot Restaurant ID?</h1>
+        <label for="email">Enter Restaurant's Email Address</label>
+        <input id="email_input" type="email" required class="email" />
+        <button onclick="submit()" class="btn btn-sign">
+          <a href="#" class="sign_in">Send ID</a>
+        </button>
+        <p class="sub-heading-sign-in">
+          Login To Dashboard? <a href="/res_sign" class="sign_up"> Login</a>
+        </p>
+        <p class="sub-heading-sign-in">
+          Want to register a Restaurant?
+          <a href="/register_res" class="sign_up"> Register</a>
+        </p>
+      </div>
+      <div class="hero-right">
+        <img
+          class="auth-illus"
+          src="../static/Images/Dashboard-Login.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <script>
+      let modal = document.getElementById("myModal");
+      let terminate = false;
+      let dot_count = 1;
+      let intervalId;
+      window.onclick = function (event) {
+        if (terminate) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+      };
+
+      function loading_indicator() {
+        if (dot_count <= 5) {
+          document.querySelector("#working").innerHTML += ".";
+          dot_count++;
+        } else {
+          document.querySelector("#working").innerHTML = "Verifying your Email";
+          dot_count = 0;
+        }
+      }
+
+      function submit() {
+        let id = document.querySelector("#email_input").value;
+        if (id != "") {
+          modal.style.display = "block";
+          document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Verifying</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <h1 id="working" class="modal-details">Verifying your Email</h1>
+        </div>`;
+          intervalId = setInterval(loading_indicator, 200);
+          let return_data = new FormData();
+          const data = {
+            email: id,
+          };
+          fetch("/forgot_id", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(data),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status) {
+                clearInterval(intervalId);
+                modal.style.display = "block";
+                document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Email verified</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <h1 id="working" class="modal-details">${data.message}</h1>
+        </div>`;
+              } else {
+                clearInterval(intervalId);
+                modal.style.display = "block";
+                document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Couldn't verify your email</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <h1 id="working" class="modal-details">${data.message}</h1>
+        </div>`;
+              }
+            });
+        } else {
+          alert("Please provide a email!");
+        }
+      }
+    </script>
+  </body>
+</html>

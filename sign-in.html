@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/sign-in.css" />
+    <title>Sign In</title>
+  </head>
+  <body>
+    <section class="main">
+      <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+          </nav>
+      <div class="hero">
+        <div class="hero-left">
+          <h1 class="heading sign-in-heading">Sign In</h1>
+          <label for="email">Enter you Email*</label>
+          <input id="email" type="email" required class="email" />
+          <label for="password">Enter you Password*</label>
+          <input id="password" type="password" required class="password" />
+          <p class="sub-heading-sign-in">
+            Don't have a account? <a href="/sign-up.html" class="sign_up">Sign Up</a>
+          </p>
+          <button onclick="sign_in()" class="btn btn-sign">
+            <a class="sign_in">Sign In</a>
+          </button>
+        </div>
+        <div class="hero-right">
+          <img
+            class="auth-illus"
+            src="assets/Images/Auth illustration.svg"
+            alt=""
+          />
+        </div>
+      </div>
+    </section>
+    <div id="loading-overlay" class="roboto-black">
+      <p>Authenticating...</p>
+    </div>
+  </body>
+  <script>
+    // Get the loading overlay element
+    const loadingOverlay = document.getElementById("loading-overlay");
+    // Get the login form element
+    const loginForm = document.querySelector(".main");
+
+    // Function to start the authentication process
+    function start_auth() {
+      // Add the "fade-out" class to the login form
+      loginForm.classList.add("fade-out");
+      // Set the position of the loading overlay to absolute
+      loadingOverlay.style.position = "absolute";
+      // Set the opacity of the loading overlay to 10
+      loadingOverlay.style.opacity = 10;
+    }
+
+    // Function to stop the authentication process
+    function stop_auth() {
+      // Set the position of the loading overlay to relative
+      loadingOverlay.style.position = "relative";
+      // Remove the "fade-out" class from the login form
+      loginForm.classList.remove("fade-out");
+      // Set the opacity of the loading overlay to 0
+      loadingOverlay.style.opacity = 0;
+    }
+
+    // Function to sign in the user
+    function sign_in() {
+      // Start the authentication process
+      start_auth();
+      // Get the email and password from the input fields
+      const email = document.querySelector("#email").value;
+      const password = document.querySelector("#password").value;
+      // Create a data object to send to the server
+      data = {
+        email: email,
+        password: password,
+      };
+      // Check if the email and password fields are not empty
+      if (email != "" && password != "") {
+        // Send the data to the server using a POST request
+        fetch("/sign_in", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // If the sign in was successful, redirect the user to the home page
+            if (data.status) {
+              alert(data.message);
+              stop_auth();
+              window.location.href = "/";
+            } else {
+              // If the sign in was unsuccessful, display an error message
+              let message = String(data.message);
+              message = message.replace("_", " ");
+              message = message.toLowerCase();
+              message = message.charAt(0).toUpperCase() + message.slice(1);
+              alert(message);
+              stop_auth();
+            }
+          })
+          .catch((error) => {
+            // If there was an error, display an error message
+            alert(error);
+            stop_auth();
+          });
+      } else {
+        // If the email or password field is empty, display an error message
+        alert("Please fill all the inputs (Email and Password)");
+        stop_auth();
+      }
+    }
+  </script>
+</html>

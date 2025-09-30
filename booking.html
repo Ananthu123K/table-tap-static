@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/booking.css" />
+    <title>Table Tap</title>
+    <script>
+      let signedIn = false; // Default to not signed in for static version
+      let restaurants = []; // Will be populated from JSON file
+      
+      // Fetch restaurant data from JSON file
+      fetch('assets/Data/data.json')
+        .then(response => response.json())
+        .then(data => {
+          restaurants = data;
+          displayRestaurants(restaurants);
+        })
+        .catch(error => console.error('Error loading restaurants:', error));
+    </script>
+  </head>
+  <body>
+    <main class="hero">
+      <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+            </ul>
+          </nav>
+      <section class="hero-main">
+        <h1 class="heading heading-hero-main">Booking</h1>
+        <h3 class="sub-heading">Our restaurants</h3>
+      </section>
+    </main>
+    <div class="search-bar">
+      <h2 class="search-heading">Seach for a Restaurant</h2>
+      <div class="search-elements">
+        <input
+          id="search_bar"
+          placeholder="Enter the name of the restaurant"
+          type="text"
+          class="search"
+        />
+        <button onclick="search()" class="btn">Search</button>
+      </div>
+    </div>
+    <section class="restaurants"></section>
+    <div class="page_control">
+      <button id="previous" onclick="previous()" class="btn">Previous</button>
+      <div class="pages">
+        <h3 class="page-item"></h3>
+      </div>
+      <button onclick="next()" class="btn">Next</button>
+    </div>
+    <script>
+      let container = document.querySelector(".restaurants");
+      window.addEventListener("scroll", function () {
+        var navbar = document.querySelector(".navbar");
+        if (window.pageYOffset > 0) {
+          navbar.classList.add("sticky");
+        } else {
+          navbar.classList.remove("sticky");
+        }
+      });
+
+      function isInteger(value) {
+        // Check if the value is a finite number and has no decimal part
+        return Number.isFinite(value) && Math.floor(value) === value;
+      }
+
+      let currentUrl = window.location.href;
+
+      let urlObj = new URL(currentUrl);
+
+      let queryParams = new URLSearchParams(urlObj.search);
+      let page_no = queryParams.get("page");
+
+      if (page_no == "1") {
+        let button = document.querySelector("#previous");
+        button.classList.remove("btn");
+        button.classList.add("btn-2");
+      }
+
+      document.querySelector(".page-item").innerHTML = `${page_no} Page`;
+
+      function next() {
+        urlObj.searchParams.set("page", parseInt(page_no) + 1);
+        window.location.href = urlObj.toString();
+      }
+
+      function previous() {
+        console.log("hello");
+        if (parseInt(page_no) > 1) {
+          urlObj.searchParams.set("page", parseInt(page_no) - 1);
+          window.location.href = urlObj.toString();
+        }
+      }
+
+      function truncateToTenWords(str) {
+        // Split the string into an array of words
+        let words = str.split(" ");
+
+        // Slice the first 10 words
+        let firstTenWords = words.slice(0, 10);
+
+        // Join the words back into a string
+        let truncatedStr = firstTenWords.join(" ");
+
+        return truncatedStr + "....";
+      }
+
+      function get_stars(rating) {
+        if (rating === 'No Review') {
+          return '<span class="no-rating">No Reviews Yet</span>';
+        }
+        rating = Math.round(parseFloat(rating) * 2) / 2;
+        let code = "";
+        for (let i = 0; i != 5; i++) {
+          if (rating - i == 0.5) {
+            code +=
+              '<img src="assets/Images/star-half.png" alt="" class="review-star" />';
+            break;
+          } else if (rating - i <= 0) {
+            code +=
+              '<img src="assets/Images/star-empty.png" alt="" class="review-star" />';
+          } else {
+            code +=
+              '<img src="assets/Images/star-full.png" alt="" class="review-star" />';
+          }
+        }
+        return code;
+      }
+
+      function displayRestaurants(restaurants) {
+        container.innerHTML = ''; // Clear existing content
+        restaurants.forEach((restaurant) => {
+          let element = document.createElement("div");
+          element.classList.add("restaurant-group");
+          element.id = restaurant["id"];
+          let button = "";
+          if (signedIn) {
+            button = '<p class="start_booking book-now">Book Now ></p>';
+          } else {
+            button = '<a onClick="alert(\'This is a demo\')" href="#" class="book-now">Book now</a>';
+          }
+          let image = `<img src="${restaurant["img"]}" alt="${restaurant["name"]}" class="res-image" />`;
+          let description = `Located in ${restaurant["location"]}`;
+          element.innerHTML = `
+                              ${image}
+                              <h1 class="res-heading">${restaurant["name"]}</h1>
+                              <h3 class="sub-heading res-sub-heading">
+                                ${description}
+                              </h3>
+                              <div class="reviews">
+                                ${get_stars(restaurant["rating"])}
+                              </div>
+                              ${button}
+                              <div class="underline"></div>
+                          `;
+          container.append(element);
+        });
+        
+        // Reattach event listeners for booking buttons
+        const booking_button = document.querySelectorAll(".start_booking");
+        booking_button.forEach((button) => {
+          button.addEventListener("click", (e) => {
+            let baseUrl =
+              window.location.protocol +
+              "//" +
+              window.location.host +
+              "/order?id=" +
+              e.target.parentNode.id;
+            console.log(baseUrl);
+            window.location.href = baseUrl.toString();
+          });
+        });
+      }
+      const booking_button = document.querySelectorAll(".start_booking");
+
+      booking_button.forEach((button) => {
+        button.addEventListener("click", (e) => {
+          let baseUrl =
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            "/order?id=" +
+            e.target.parentNode.id;
+          console.log(baseUrl);
+          window.location.href = baseUrl.toString();
+        });
+      });
+
+      document.querySelector("#search_bar").addEventListener("keyup", (e)=>{
+        if (e.keyCode == 13) {
+          search();
+        }
+      })
+      
+
+      function search() {
+        let keyword = document.querySelector("#search_bar").value.toLowerCase();
+        if (keyword != "") {
+          document.querySelector("body").style.cursor = "wait";
+          // Filter restaurants based on name or location
+          const filtered_restaurants = restaurants.filter(restaurant => 
+            restaurant["name"].toLowerCase().includes(keyword) || 
+            restaurant["location"].toLowerCase().includes(keyword)
+          );
+          
+          if (filtered_restaurants.length > 0) {
+            displayRestaurants(filtered_restaurants);
+          } else {
+            alert("No restaurants found matching your search!");
+          }
+          document.querySelector("body").style.cursor = "auto";
+        } else {
+          alert("Please type something in the search bar!");
+        }
+      }
+    </script>
+  </body>
+</html>

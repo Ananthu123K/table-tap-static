@@ -1,0 +1,171 @@
+/* Imports */
+
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Hind:wght@300;400;500;600;700&family=Ribeye+Marrow&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Arimo", sans-serif;
+    overflow-x: hidden;
+}
+
+.hero {
+    width: 100vw;
+    height: 100vh;
+}
+
+/* Navbar */
+
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+}
+
+.heading {
+    font-family: "Anton", sans-serif;
+    font-size: 2rem;
+}
+
+.heading span {
+    color: #ffc000;
+    font-family: "Anton", sans-serif;
+}
+
+.nav-list {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.nav-list li {
+    list-style: none;
+    padding: 0 20px;
+    transition: all 0.2s ease-in;
+}
+
+.item {
+    text-decoration: none;
+    color: black;
+    transition: all 0.2s ease-in;
+}
+
+.item:hover {
+    color: #ffc000;
+}
+
+.nav-list li:hover {
+    transform: scale(0.9);
+}
+
+.nav-button {
+    text-decoration: none;
+    color: white;
+}
+
+.btn {
+    padding: 10px 20px;
+    background-color: #ffc000;
+    border: none;
+    border-radius: 5px;
+    transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+    transform: scale(0.9);
+}
+
+/* Hero */
+
+.hero-main {
+    display: flex;
+    width: 100vw;
+    justify-content: space-evenly;
+    padding: 20px;
+}
+
+.hero-main-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0 10px;
+}
+
+.hero-img {
+    width: 30vw;
+    height: 80vh;
+    border-radius: 10px;
+}
+
+.tag {
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    width: 10vw;
+    border-radius: 10px;
+    color: #ffc000;
+    margin: 20px 0;
+}
+
+.hero-heading {
+    font-size: 4rem;
+    margin: 30px 0;
+}
+
+.hero-heading span {
+    color: #ffc000;
+}
+
+.sub-heading {
+    color: #8c8c9a;
+    font-weight: 100;
+}
+
+.hero-btn {
+    width: 10vw;
+    margin: 20px 0;
+}
+
+.hero-btn a {
+    text-decoration: none;
+    color: white;
+}
+
+/* Info Bar */
+
+.info-bar {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    margin: 20px 0;
+}
+
+.info-starter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 60vw;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    margin: 10px 0;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.info-group {
+    display: flex;
+    flex-direction: column;
+    width: 14vw;
+    align-items: center;
+    justify-content: center;
+}
+
+.info-item {
+    margin: 10px 0;
+}
+
+.info-text {
+    color: #ffc000;
+}

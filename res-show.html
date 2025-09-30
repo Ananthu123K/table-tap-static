@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/res-show.css" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+    <title>Restaurant | TableTap</title>
+    <script>
+      const restaurant = JSON.parse(`{{ data|tojson }}`);
+    </script>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div id="#modal-content" class="modal-content"></div>
+    </div>
+    <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+        <button class="btn">
+          <a href="/profile" class="nav-button btn">{{ display_name }}</a>
+        </button>
+        {% else %}
+        <button class="btn">
+          <a href="/sign_in" class="nav-button btn">Sign In</a>
+        </button>
+        {% endif %}
+      </div>
+    </nav>
+    <section class="main"></section>
+  </body>
+  <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+  <script>
+    let dot_count = 0;
+    let intervalId;
+    let terminater = false;
+    const modal_content = document.querySelector(".modal-content");
+    function get_stars(rating) {
+      rating = Math.round(rating * 2) / 2;
+      let code = "";
+      for (let i = 0; i != 5; i++) {
+        const element = [i];
+        if (rating - i == 0.5) {
+          code +=
+            '<img src="assets/Images/star-half.png" alt="" class="review-star" />';
+          break;
+        } else if (rating - i <= 0) {
+          code +=
+            '<img src="assets/Images/star-empty.png" alt="" class="review-star" />';
+        } else {
+          code +=
+            '<img src="assets/Images/star-full.png" alt="" class="review-star" />';
+        }
+      }
+      return code;
+    }
+
+    function get_options(seats) {
+      let code = "";
+      for (let i = 1; i <= seats; i++) {
+        code += `<option value="${i}">${i}</option>`;
+      }
+      return code;
+    }
+
+    let parking = "";
+
+    if (restaurant["parking"]) {
+      console.log("Hello??");
+      parking = `<div class="info-group ava-seats">
+          <img src="assets/Images/parking icon green.svg" alt="" class="info-img" />
+          <h3 class="ava-total-seats info-sub-heading">Parking Avaiable</h3>
+        </div>`;
+    } else {
+      console.log("What the hell?");
+      parking = `<div class="info-group ava-seats">
+          <img src="/static/Images/parking icon red.svg" alt="" class="info-img" />
+          <h3 class="ava-total-seats info-sub-heading">Parking Not Avaiable</h3>
+        </div>`;
+    }
+
+    const container = document.querySelector(".main");
+
+    restaurant["desc"] = String(restaurant["desc"]).replace(/\\n/g, "\n")
+
+    let content = `<h1 class="main-heading">${restaurant["name"]}</h1>
+      <div class="reviews">
+        ${get_stars(parseInt(restaurant["ratings"]))}
+        <p class="no-reviews">(${restaurant["reviews"]} Review)</p>
+      </div>
+      <div class="info-bar">
+        <div class="info-group max-chairs">
+          <img src="/static/Images/seat icon.svg" alt="" class="info-img" />
+          <h3 class="no-of-total-seats info-sub-heading">${
+            restaurant["total_seats"]
+          } Total Seats</h3>
+        </div>
+        <div class="info-group ava-seats">
+          <img src="/static/Images/chair icon.svg" alt="" class="info-img" />
+          <h3 class="ava-total-seats info-sub-heading">${
+            restaurant["ava_seats"]
+          } Available Seats</h3>
+        </div>
+        ${parking}
+      </div>
+      <div class="gallery">
+        <div class="gallery-item image-first"></div>
+        <div class="gallery-item"></div>
+        <div class="gallery-item"></div>
+        <div class="gallery-item"></div>
+        <div class="gallery-item"></div>
+      </div>
+      <div class="details">
+        <div class="details-left">
+          <div class="pricing">
+            <h2 class="pricing-heading">From ${restaurant["price"]}</h2>
+            <h3 class="pricing-sub-heading">per chair</h3>
+          </div>
+          <div class="line"></div>
+          <div class="details-text">
+            <p class="details-content">
+              ${restaurant["desc"]}
+            </p>
+          </div>
+        </div>
+        <div class="details-right">
+          <div class="selection">
+            <h1 class="selection-heading">Book</h1>
+            <div class="selection-item selection-box">
+              <label for="date">For (Date)</label>
+              <input id="date" class="selection input" type="date" />
+            </div>
+            <div class="selection-item selection-box">
+              <label for="date">From (Time)</label>
+              <input id="time_from" class="selection input" type="time" />
+            </div>
+            <div class="selection-item selection-box">
+              <label for="date">To (Time)</label>
+              <input id="time_to"  class="selection input" type="time" />
+            </div>
+            <div class="seat-container selection-item">
+              <label>No of seats</label>
+              <select name="Seats" id="no-seats">
+                ${get_options(restaurant["ava_seats"])}
+              </select>
+            </div>
+          </div>
+          <button onclick="pop_up()" class="btn btn-main">Book</button>
+        </div>
+      </div>`;
+
+    var modal = document.getElementById("myModal");
+
+    window.onclick = function (event) {
+      if (terminate) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    };
+
+    container.innerHTML = content;
+
+    const dateInput = document.querySelector("#date");
+    const selectionBoxs = document.querySelectorAll(".selection-box");
+    const selectContainer = document.querySelector(".seat-container");
+    const seatsInput = document.querySelector("#no-seats");
+
+    const images = document.querySelectorAll(".gallery-item");
+
+    let image_urls = restaurant["images"];
+
+    let counter = 0;
+
+    console.log(image_urls);
+
+    image_urls.forEach((url) => {
+      images[counter].style.backgroundImage = `url("${url}")`;
+      counter++;
+    });
+
+    const today_date = new Date();
+    const formattedDate = today_date.toISOString().split("T")[0];
+    dateInput.value = formattedDate;
+
+    selectionBoxs.forEach((box) => {
+      box.addEventListener("click", (event) => {
+        event.preventDefault();
+        input = box.querySelector("input");
+        input.showPicker();
+      });
+    });
+    selectContainer.addEventListener("click", () => {
+      seatsInput.showPicker();
+    });
+
+    function convert_time(time) {
+      const [hours, minutes] = time.split(":");
+      let formattedHours = parseInt(hours) % 12 || 12;
+      const formattedMinutes = minutes.padStart(2, "0");
+      const period = parseInt(hours) >= 12 ? "PM" : "AM";
+      return `${formattedHours}:${formattedMinutes} ${period}`;
+    }
+
+    const today = new Date().toISOString().slice(0, 10);
+    const date_input = document.getElementById("date");
+    const time_input_from = document.getElementById("time_from");
+    const time_input_to = document.getElementById("time_to");
+    const no_seats = document.querySelector("#no-seats");
+
+    function pop_up() {
+      if (
+        time_input_from.value != "" &&
+        date_input.value != "" &&
+        time_input_to &&
+        parseInt(no_seats.value) != ""
+      ) {
+        let time_from = convert_time(time_input_from.value.toString());
+        let time_to = convert_time(time_input_to.value.toString());
+        let price = parseInt(String(restaurant["price"]).split("₹")[1]);
+        let content = `
+        <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">${restaurant["name"]}</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span>
+        </div>
+        <div class="modal-details">
+          <h3 class="modal-details-item det-for">For:- ${dateInput.value}</h3>
+          <h3 class="modal-details-item det-from">From:- ${time_from}</h3>
+          <h3 class="modal-details-item det-to">To:- ${time_to}</h3>
+          <h3 class="modal-details-item det-seats">Seats:- ${
+            no_seats.value
+          }</h3>
+          <h3 class="modal-details-item det-price">Price:- ₹${
+            price * parseInt(no_seats.value)
+          } (${price} * ${no_seats.value});</h3>
+        </div>
+        <button onclick="submit()" class="btn">Book</button>`;
+        modal_content.innerHTML = content;
+        modal.style.display = "block";
+        function close() {
+          modal.style.display = "none";
+        }
+      } else {
+        alert("Please select a day, time and no of seats!");
+      }
+    }
+    function submit() {
+      // Check if all the fields are filled in
+      if (
+        time_input_from.value != "" &&
+        date_input.value != "" &&
+        time_input_to &&
+        parseInt(no_seats.value) != ""
+      ) {
+        // Check if the number of seats is between 1 and 25
+        if (
+          parseInt(no_seats.value) < 1 ||
+          parseInt(no_seats.value) > parseInt(restaurant["ava_seats"])
+        ) {
+          alert("Please choose a number between 1 and 25 for the seats");
+          return;
+        }
+        modal.style.display = "block";
+        document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking in progress!</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <h1 id="working" class="modal-details">Booking</h1>
+        </div>`;
+        intervalId = setInterval(loading_indicator, 200);
+        // Convert the time from 24-hour format to 12-hour format
+        let current_time = new Date();
+        console.log(time_input_from.value.toString());
+        console.log(time_input_to.value.toString());
+        let time_from = convert_time(time_input_from.value.toString());
+        let time_to = convert_time(time_input_to.value.toString());
+        let price =
+          parseInt(String(restaurant["price"]).split("₹")[1]) *
+          parseInt(no_seats.value);
+
+        // Create the data object to send to the server
+        data = {
+          time_from: time_from,
+          time_to: time_to,
+          date: date_input.value,
+          id: restaurant["id"],
+          no_seats: parseInt(no_seats.value),
+          price: price,
+        };
+        // Send the data to the server using a POST request
+        fetch("/order", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            // modal.style.display = "none";
+            // Display the server's response to the user
+            clearInterval(intervalId)
+            if (data.status) {
+              pop_party();
+              modal.style.display = "block";
+              terminater = true;
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+              // window.location.href = "/";
+            } else {
+              document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Error while Booking</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+            }
+          })
+          .catch((error) => {
+            document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Error while Booking</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+          });
+      } else {
+        console.log(parseInt(no_seats.value));
+        alert("Please select a day, time and no of seats!");
+      }
+    }
+
+    function loading_indicator() {
+      if (dot_count <= 5) {
+        document.querySelector("#working").innerHTML += ".";
+        dot_count++;
+      } else {
+        document.querySelector("#working").innerHTML = "Booking";
+        dot_count = 0;
+      }
+    }
+
+    function pop_party() {
+      const duration = 7 * 1000,
+        animationEnd = Date.now() + duration,
+        defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+      function randomInRange(min, max) {
+        return Math.random() * (max - min) + min;
+      }
+
+      const interval = setInterval(function () {
+        const timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+          return clearInterval(interval);
+        }
+
+        const particleCount = 50 * (timeLeft / duration);
+
+        // since particles fall down, start a bit higher than random
+        confetti(
+          Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+          })
+        );
+        confetti(
+          Object.assign({}, defaults, {
+            particleCount,
+            origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+          })
+        );
+      }, 250);
+    }
+  </script>
+</html>

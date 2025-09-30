@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/sign-up.css" />
+    <title>Sign Up</title>
+  </head>
+  <body>
+    <section class="main">
+      <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+          </nav>
+      <div class="hero">
+        <div class="hero-left">
+          <h1 class="heading sign-in-heading">Sign Up</h1>
+          <label for="email">Enter you Email*</label>
+          <input id="email" type="email" required class="email" />
+          <label for="name">Enter you Name*</label>
+          <input id="name" type="name" required class="name" />
+          <label for="password">Enter you password*</label>
+          <input id="password" type="password" required class="password" />
+          <label for="password">Re Enter you Password*</label>
+          <input id="repassword" type="password" required class="password" />
+          <p class="sub-heading-sign-in">
+            Have a account? <a href="#" class="sign-in.html">Sign In</a>
+          </p>
+          <button onclick="authentication()" class="btn btn-sign">
+            <a href="#" class="sign_in">Sign Up</a>
+          </button>
+        </div>
+        <div class="hero-right">
+          <img
+            class="auth-illus"
+            src="assets/Images/Auth illustration.svg"
+            alt=""
+          />
+        </div>
+      </div>
+    </section>
+    <div id="loading-overlay" class="roboto-black">
+      <p>Authenticating...</p>
+    </div>
+    <script>
+      // Get the loading overlay element
+      const loadingOverlay = document.getElementById("loading-overlay");
+      // Get the login form element
+      const loginForm = document.querySelector(".main");
+
+      // Add an event listener to the form for the submit event
+      function authentication() {
+        // Start the authentication process
+        start_auth();
+        // Get the email, name, password, and re-entered password from the input fields
+        const email = document.querySelector("#email").value;
+        const name = document.querySelector("#name").value;
+        const password = document.querySelector("#password").value;
+        const repassword = document.querySelector("#repassword").value;
+        // Check if the email, name, password, and re-entered password fields are not empty
+        if (email != "" && name != "" && password != "" && repassword != "") {
+          // Check if the password and re-entered password match
+          if (password === repassword) {
+            // Check if the password is at least 6 characters long
+            if (password.length >= 6) {
+              // Create a data object to send to the server
+              let data = {
+                email: email,
+                password: password,
+                name: name,
+              };
+              // Send the data to the server using a POST request
+              fetch("/sign_up", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(data),
+              })
+                .then((response) => response.json())
+                .then((data) => {
+                  // If the sign up was successful, redirect the user to the home page
+                  if (data.status) {
+                    alert(data.message);
+                    window.location.href = "/";
+                  } else {
+                    // If the sign up was unsuccessful, display an error message
+                    alert(data.message);
+                    stop_auth();
+                  }
+                })
+                .catch((error) => {
+                  // If there was an error, display an error message
+                  alert(error);
+                  stop_auth();
+                });
+            } else {
+              // If the password is less than 6 characters long, display an error message
+              alert("Password should be greater than 6 characters!");
+              stop_auth();
+            }
+          } else {
+            // If the password and re-entered password do not match, display an error message
+            alert("Passwords doesn't match!");
+            stop_auth();
+          }
+        } else {
+          // If the email, name, password, or re-entered password field is empty, display an error message
+          alert("Fill all the inputs");
+          stop_auth();
+        }
+      };
+
+      // Function to start the authentication process
+      function start_auth() {
+        // Add the "fade-out" class to the login form
+        loginForm.classList.add("fade-out");
+        // Set the position of the loading overlay to absolute
+        loadingOverlay.style.position = "absolute";
+        // Set the opacity of the loading overlay to 10
+        loadingOverlay.style.opacity = 10;
+      }
+
+      // Function to stop the authentication process
+      function stop_auth() {
+        // Set the position of the loading overlay to relative
+        loadingOverlay.style.position = "relative";
+        // Remove the "fade-out" class from the login form
+        loginForm.classList.remove("fade-out");
+        // Set the opacity of the loading overlay to 0
+        loadingOverlay.style.opacity = 0;
+      }
+    </script>
+  </body>
+</html>

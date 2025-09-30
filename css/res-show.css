@@ -1,0 +1,379 @@
+/* Imports */
+
+@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Hind:wght@300;400;500;600;700&family=Ribeye+Marrow&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400..700;1,400..700&family=Hind:wght@300;400;500;600;700&family=Ribeye+Marrow&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Anton&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Reddit+Mono:wght@200..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap");
+
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arimo", sans-serif;
+  overflow-x: hidden;
+}
+
+.hero {
+  width: 100vw;
+  height: 100vh;
+}
+
+/* Navbar */
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px;
+  align-items: center;
+}
+
+.heading {
+  font-family: "Anton", sans-serif;
+  font-size: 2rem;
+}
+
+.heading span {
+  color: #ffc000;
+  font-family: "Anton", sans-serif;
+}
+
+.nav-list {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.nav-list li {
+  list-style: none;
+  padding: 0 20px;
+  transition: all 0.2s ease-in;
+}
+
+.item {
+  text-decoration: none;
+  color: black;
+  transition: all 0.2s ease-in;
+}
+
+.item:hover {
+  color: #ffc000;
+}
+
+.nav-list li:hover {
+  transform: scale(0.9);
+}
+
+.nav-button {
+  text-decoration: none;
+  color: white;
+}
+
+.btn {
+  padding: 10px 20px;
+  background-color: #ffc000;
+  border: none;
+  border-radius: 5px;
+  transition: all 0.2s ease-in;
+}
+
+.btn:hover {
+  transform: scale(0.9);
+}
+
+/* Hero */
+
+.hero {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  margin: 0 50px;
+  width: 100vw;
+  height: 80vh;
+}
+
+.hero-right {
+  width: 50vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: 10vw;
+}
+
+.auth-illus {
+  width: 500px;
+}
+
+.sign-in-heading {
+  font-family: "Roboto Mono", monospace;
+  margin: 20px 0;
+}
+
+.hero-left {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  justify-content: center;
+  padding-left: 10vw;
+}
+
+.hero-left label {
+  margin: 20px 0;
+  color: #8c8c9a;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.hero-left input {
+  width: 25vw;
+  border: #b3b3b3 2px solid;
+  padding: 20px 10px;
+  outline: none;
+  border-radius: 3px;
+}
+
+.sub-heading-sign-in {
+  margin: 20px 0;
+}
+
+.btn-sign {
+  width: 10vw;
+}
+
+.sign_in {
+  color: white;
+  text-decoration: none;
+}
+
+.reviews {
+  display: flex;
+  margin: 20px 0;
+}
+
+.no-reviews {
+  margin: 0 10px;
+  font-size: 0.8rem;
+  color: #8c8c9a;
+}
+
+.info-bar {
+    display: flex;
+    width: 50vw;
+    margin: 40px 0;
+}
+
+.info-group {
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    margin-right: 30px;
+}
+
+.info-group img {
+    margin-right: 15px;
+    width: 3vw;
+}
+
+.main {
+    margin: 70px 70px;
+}
+
+.main-heading {
+  font-size: 3rem;
+}
+
+.gallery {
+  width: 90vw;
+  height: 70vh;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  row-gap: 10px;
+  column-gap: 10px;
+}
+
+.gallery div {
+  width: 100%;
+  height: 100%;
+  /* background-image: url("https://loremflickr.com/1920/1080/restaurant"); */
+  background-size: cover;
+  background-repeat: no-repeat;
+  border-radius: 5px;
+}
+
+.image-first {
+  grid-column: 1 / 5;
+  grid-row: 1 / 3;
+}
+
+.info-sub-heading {
+  color: #000;
+}
+
+
+/* Details */
+
+.details {
+  display: flex;
+}
+
+.pricing {
+  margin: 40px 0;
+}
+
+
+.details-left {
+  padding-right: 50px;
+  width: 320%;
+}
+.pricing-heading {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.pricing-sub-heading {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #8c8c8c93;
+  font-size: 1rem;
+}
+
+.line {
+  min-height: 0.5px;
+  max-width: 100%;
+  background-color: #8c8c9a8a;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+.details-content {
+  color: #8c8c8c;
+  font-size: 1.2rem;
+}
+
+.selection-heading {
+  text-align: center;
+  margin: 20px 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+}
+
+.selection-item {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: left;
+  margin: 20px 0;
+  background-color: #c8c8c888;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.selection-item label {
+  font-family: "Roboto Mono", monospace;
+  margin: 10px 0;
+  color: #808080;
+}
+
+.details-right {
+  width: 100%;
+}
+
+.selection-item input {
+  padding: 10px 10px 10px 0;
+  font-family: "Roboto Mono", monospace;
+  border: none;
+  background-color: #e2e2e2;
+  cursor: pointer;
+  outline: none;
+}
+
+.selection-item select {
+  padding: 10px 10px 10px 0;
+  font-family: "Roboto Mono", monospace;
+  border: none;
+  background-color: #e2e2e2;
+  cursor: pointer;
+  outline: none
+}
+
+.btn-main {
+  width: 100%;
+  color: white;
+  cursor: pointer;
+}
+
+
+/* The Modal (background) */
+.modal {
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: hidden; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto; /* 15% from the top and centered */
+  padding: 20px 40px;
+  border: 1px solid #888;
+  width: 40%; /* Could be more or less, depending on screen size */
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
+
+/* The Close Button */
+.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
+.heading-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 20px 0;
+}
+
+.heaindg-modal {
+  font-size: 1.5rem;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-details {
+  margin: 10px 0;
+  font-size: 1rem;
+  color: #000000;
+}
+
+.modal-details h3 {
+  font-family: "Roboto Mono", monospace;
+}
+
+.modal-content button {
+  width: 10vw;
+  margin: 10px 0;
+  color: white;
+  cursor: pointer;
+}
+

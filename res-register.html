@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/register-res.css" />
+    <title>Register Restaurant | TableTap</title>
+  </head>
+  <body>
+    <div id="myModal" class="modal">
+      <!-- Modal content -->
+      <div id="#modal-content" class="modal-content">
+        <div class="heading-content"></div>
+      </div>
+    </div>
+    <nav class="navbar">
+            <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <ul class="nav-list">
+              <li><a href="/" class="item">Home</a></li>
+              <li><a href="/booking.html" class="item">Book Now</a></li>
+              <li><a href="/contact.html" class="item">Contact Us</a></li>
+              <li><a href="/sign-in.html" class="item">Dashboard</a></li>
+            </ul>
+            <div class="button-list-navbar">
+                <button class="btn">
+                  <a href="/sign-in.html" class="nav-button btn">Sign In</a>
+                </button>
+            </div>
+          </nav>
+
+    <section class="main">
+      <div class="main-enclosure">
+        <h1 class="heading">Register your Restaurant</h1>
+        <label class="label-main" for="email">Enter your Email</label>
+        <input id="email" type="email" required class="main-input email" />
+        <label class="label-main" for="name">Enter your Restaurant Name</label>
+        <input id="name" type="text" required class="main-input name" />
+        <label class="label-main" for="name"
+          >Enter No of seats Avaiable for online booking</label
+        >
+        <input
+          id="ava_seats"
+          type="number"
+          required
+          class="main-input no_of_ava_seats"
+        />
+        <label class="label-main" for="name"
+          >Google Places rating (0 - 5)</label
+        >
+        <input id="rating" type="number" required class="main-input rating" />
+        <label class="label-main" for="name">Number of ratings</label>
+        <input
+          id="reviews"
+          t
+          type="number"
+          required
+          class="main-input no_of_rating"
+        />
+        <label class="label-main" for="name"
+          >Enter price for per chair (In rupees)</label
+        >
+        <input id="price" type="number" required class="main-input price" />
+        <div class="parking">
+          <input id="parking" type="checkbox" class="parking-box" />
+          <label for="parking">Do you have parking for your restaurant?</label>
+        </div>
+        <textarea
+          name="description"
+          placeholder="Message*"
+          id="desc"
+        ></textarea>
+        <div class="image-uploads">
+          <div class="main-image-box">
+            <input
+              id="main-image-input"
+              type="file"
+              accept="image/*"
+              hidden
+              multiple
+            />
+            <label class="label-main main-image-heading" for=""
+              >Upload image of your restaurant <br />
+              This image will be using in your bookings front! (Under
+              2MB)</label
+            >
+            <img
+              id="main-image-holder"
+              src="../static/Images/placeholder.png"
+              alt=""
+              class="main-image"
+            />
+            <button id="main-starter" class="btn input_starter">
+              Select Image
+            </button>
+          </div>
+          <div class="sec-images">
+            <input
+              id="side-image-input"
+              type="file"
+              accept="image/*"
+              hidden
+              multiple
+            />
+            <label class="label-main main-image-heading" for=""
+              >Upload 4 images of your restaurant <br />
+              These images will be shown in your booking page! (Under
+              2MB)</label
+            >
+            <div class="img-brick">
+              <img
+                src="../static/Images/placeholder.png"
+                alt=""
+                class="side-image-holder main-image"
+              />
+              <img
+                src="../static/Images/placeholder.png"
+                alt=""
+                class="side-image-holder main-image"
+              />
+              <img
+                src="../static/Images/placeholder.png"
+                alt=""
+                class="side-image-holder main-image"
+              />
+              <img
+                src="../static/Images/placeholder.png"
+                alt=""
+                class="side-image-holder main-image"
+              />
+            </div>
+            <button id="side-starter" class="btn input_starter">
+              Select Images
+            </button>
+          </div>
+          <div class="submit-closure">
+            <button onclick="register()" class="btn submit">
+              Register your Restaurant
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/@tsparticles/confetti@3.0.3/tsparticles.confetti.bundle.min.js"></script>
+    <script>
+      let dot_count = 1;
+      let intervalId;
+      let terminate = false;
+      let modal = document.getElementById("myModal");
+
+      window.onclick = function (event) {
+        if (terminate) {
+          if (event.target == modal) {
+            modal.style.display = "none";
+          }
+        }
+      };
+      const main_input = document.querySelector(".main-image-box input");
+      const main_image = document.querySelector(".main-image-box img");
+      const main_trigger = document.querySelector(".main-image-box button");
+      const sides_input = document.querySelector("#side-image-input");
+      const sides_images = document.querySelectorAll(".side-image-holder");
+      const sides_trigger = document.querySelector("#side-starter");
+      let counter = 0;
+
+      let main_file = [];
+      let slide_files = [];
+
+      main_trigger.addEventListener("click", () => {
+        main_input.click();
+      });
+
+      sides_trigger.addEventListener("click", () => {
+        sides_input.click();
+      });
+
+      main_input.addEventListener("change", (event) => {
+        if (event.target.files && event.target.files.length == 1) {
+          main_file = event.target.files;
+          let image = event.target.files[0];
+          if (image.size < 1000000) {
+            const reader = new FileReader();
+            reader.onload = () => {
+              const img_url = reader.result;
+              main_image.src = img_url;
+            };
+            reader.readAsDataURL(image);
+          } else {
+            alert("Please select a file under 2MB");
+          }
+        } else if (event.target.files.length == 0) {
+          alert("Please select one image!");
+        } else {
+          alert("Please only select one image!");
+        }
+      });
+
+      sides_input.addEventListener("change", () => {
+        console.log("Hello?");
+        if (event.target.files && event.target.files.length == 4) {
+          slide_files = event.target.files;
+          let files = event.target.files;
+          for (let i = 0; i < Math.min(files.length, 4); i++) {
+            sides_images.forEach((image) => {
+              image.src = "../static/Images/placeholder.png";
+            });
+            let file = files[i];
+            if (!file.type.startsWith("image/")) {
+              alert("Please select only image files.");
+              continue;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+              const url = e.target.result;
+              sides_images[i].src = url;
+            };
+            reader.readAsDataURL(file);
+          }
+        } else {
+          alert("Please select 4 images!");
+        }
+      });
+
+      function loading_indicator() {
+        if (dot_count <= 5) {
+          document.querySelector("#working").innerHTML+=".";
+          dot_count++;
+        } else {
+          document.querySelector("#working").innerHTML="Working";
+          dot_count = 0;
+        }
+      }
+
+      function register() {
+        const email = document.querySelector("#email").value;
+        const name = document.querySelector("#name").value;
+        const ava_seats = document.querySelector("#ava_seats").value;
+        const rating = document.querySelector("#rating").value;
+        const reviews = document.querySelector("#reviews").value;
+        const price = document.querySelector("#price").value;
+        const desc = document.querySelector("#desc").value;
+        const parking = document.querySelector("#parking").checked;
+        if (
+          email != "" &&
+          name != "" &&
+          ava_seats != "" &&
+          rating != "" &&
+          reviews != "" &&
+          price != "" &&
+          desc != "" &&
+          main_file.length == 1 &&
+          slide_files.length == 4
+        ) {
+          modal.style.display = "block";
+          document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Registeration in progress!</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <h1 id="working" class="modal-details">Working</h1>
+        </div>`;
+        intervalId = setInterval(loading_indicator, 200)
+          let return_data = new FormData();
+
+          // Append the main file
+          return_data.append("mainImage", main_file[0]);
+
+          // Append the side files
+          for (let i = 0; i < slide_files.length; i++) {
+            return_data.append("sideImages", slide_files[i]);
+          }
+          const data = {
+            email: email,
+            name: name,
+            ava_seats: ava_seats,
+            rating: rating,
+            reviews: reviews,
+            price: price,
+            desc: desc,
+            parking: parking,
+            total_seats: ava_seats,
+          };
+          return_data.append("data", JSON.stringify(data));
+          fetch("/register_res", {
+            method: "POST",
+            body: return_data,
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status) {
+                pop_party();
+                clearInterval(intervalId);
+                modal.style.display = "block";
+                document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Booking complete</h1>
+          <span onclick="modal.style.display='none'; window.location.href='/'; terminate=true;" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+              } else {
+                clearInterval(intervalId);
+                modal.style.display = "block";
+                document.querySelector(".modal-content").innerHTML = `
+              <div class="heading-content">
+          <h1 class="heaindg-modal modal-res-name">Error while Booking</h1>
+          <span onclick="modal.style.display='none'" class="close">&times;</span> </div>
+          <div class="modal-details">${data.message}</div>
+        </div>`;
+              }
+            });
+          console.log(data);
+        } else if (main_file.length != 1 || slide_files.length != 4) {
+          alert("Please select images!");
+        } else {
+          alert("Please fill out all inputs!");
+        }
+      }
+
+      function pop_party() {
+        const duration = 7 * 1000,
+          animationEnd = Date.now() + duration,
+          defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+        function randomInRange(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        const interval = setInterval(function () {
+          const timeLeft = animationEnd - Date.now();
+
+          if (timeLeft <= 0) {
+            return clearInterval(interval);
+          }
+
+          const particleCount = 50 * (timeLeft / duration);
+
+          // since particles fall down, start a bit higher than random
+          confetti(
+            Object.assign({}, defaults, {
+              particleCount,
+              origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 },
+            })
+          );
+          confetti(
+            Object.assign({}, defaults, {
+              particleCount,
+              origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 },
+            })
+          );
+        }, 250);
+      }
+    </script>
+  </body>
+</html>

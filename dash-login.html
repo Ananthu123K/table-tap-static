@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="css/dash-login.css" />
+    <title>Dashboard Login</title>
+  </head>
+  <body>
+    <nav class="navbar">
+      <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+      <ul class="nav-list">
+        <li><a href="/" class="item">Home</a></li>
+        <li><a href="/booking" class="item">Book Now</a></li>
+        <li><a href="/contact" class="item">Contact Us</a></li>
+        <li><a href="/res_sign" class="item">Dashboard</a></li>
+      </ul>
+      <div class="button-list-navbar">
+        {% if signed_in %}
+        <button class="btn">
+            <a href="/profile" class="nav-button btn">{{ display_name }}</a>
+          </button>
+        {% else %}
+        <button class="btn">
+          <a href="/sign_in" class="nav-button btn">Sign In</a>
+        </button>
+      {% endif %}
+    </div>
+    </nav>
+    <div class="hero">
+      <div class="hero-left">
+        <h1 class="heading sign-in-heading">Restaurant Dashbord Login</h1>
+        <label for="email">Enter your Restaurant ID</label>
+        <input id="email_input" type="email" required class="email" />
+        <button onclick="submit()" class="btn btn-sign">
+          <a href="#" class="sign_in">Go to Dashbord</a>
+        </button>
+        <p class="sub-heading-sign-in">
+          Forgot Restaurant ID? <a href="/forgot_id" class="sign_up">
+          Click Here!</a
+          >
+        </p>
+        <p class="sub-heading-sign-in">
+          Want to register a Restaurant? <a href="/register_res" class="sign_up">
+          Register</a
+          >
+        </p>
+      </div>
+      <div class="hero-right">
+        <img
+          class="auth-illus"
+          src="../static/Images/Dashboard-Login.svg"
+          alt=""
+        />
+      </div>
+    </div>
+    <script>
+      function submit() {
+        let id = document.querySelector("#email_input").value;
+        if (id != "") {
+          var baseUrl =
+            window.location.protocol +
+            "//" +
+            window.location.host +
+            "/dashboard?id=" +
+            id;
+          console.log(baseUrl);
+          window.location.href = baseUrl.toString();
+        } else {
+          alert("Please provide a id!");
+        }
+      }
+    </script>
+  </body>
+</html>
