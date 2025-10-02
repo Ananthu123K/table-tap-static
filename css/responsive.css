@@ -1,0 +1,377 @@
+/* Common Responsive Styles */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+/* Common Navigation Styles */
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-list {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+    }
+
+    .button-list-navbar {
+        display: none;
+    }
+}
+
+/* Home Page Specific Styles */
+@media screen and (max-width: 768px) {
+    /* Homepage hero section */
+    .hero-main {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 20px 10px;
+        min-height: 80vh;
+    }
+
+    .hero-main-left {
+        order: 1;
+        width: 100%;
+        align-items: center;
+    }
+
+    .hero-main-right {
+        order: 2;
+        margin-top: 20px;
+    }
+
+    .hero-img {
+        width: 90vw;
+        height: auto;
+        max-height: 50vh;
+        object-fit: cover;
+        margin-top: 20px;
+    }
+
+    .tag {
+        width: auto;
+        min-width: 150px;
+    }
+
+    .hero-heading {
+        font-size: 2.5rem;
+        margin: 20px 0;
+    }
+
+    .hero-btn {
+        width: auto;
+        min-width: 150px;
+    }
+}
+
+/* Booking Page Specific Styles */
+@media screen and (max-width: 1200px) {
+    .restaurants {
+        grid-template-columns: repeat(2, 1fr);
+        margin: 5rem 4rem;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    /* Booking page hero */
+    .booking-hero {
+        height: 60vh;
+    }
+
+    .booking-hero-main {
+        height: 40vh;
+    }
+
+    .heading-hero-main {
+        font-size: 3rem;
+        text-align: center;
+    }
+
+    /* Restaurant grid */
+    .restaurants {
+        grid-template-columns: 1fr;
+        margin: 2rem;
+    }
+
+    .res-image {
+        height: 250px;
+    }
+
+    /* Search bar */
+    .search-bar input {
+        width: 60vw;
+    }
+
+    /* Pagination */
+    .page_control {
+        margin: 1rem 2rem;
+    }
+}
+
+/* Common Mobile Styles */
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .heading {
+        font-size: 1.5rem;
+    }
+
+    /* Home page mobile adjustments */
+    .hero-heading {
+        font-size: 2rem;
+    }
+
+    .sub-heading {
+        font-size: 1rem;
+    }
+
+    /* Booking page mobile adjustments */
+    .heading-hero-main {
+        font-size: 2rem;
+    }
+
+    .search-heading {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .search-elements {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .search-bar input {
+        width: 80vw;
+        margin: 0;
+    }
+
+    .restaurants {
+        margin: 2rem 1rem;
+    }
+
+    .res-image {
+        height: 200px;
+    }
+
+    .page_control {
+        margin: 1rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}
+
+/* Dashboard Page Specific Styles */
+@media screen and (max-width: 1200px) {
+    .main {
+        padding: 5vh 5vw;
+    }
+
+    .main-left-image {
+        width: 45vw;
+    }
+
+    .details-content {
+        width: 45vw;
+    }
+
+    .main-right {
+        width: 35vw;
+    }
+
+    .modal-content {
+        width: 60%;
+    }
+
+    .modal-content button {
+        width: 120px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .main {
+        flex-direction: column;
+        padding: 2vh 4vw;
+    }
+
+    .main-left {
+        width: 100%;
+        margin-bottom: 30px;
+    }
+
+    .main-left-image {
+        width: 92vw;
+        height: 40vh;
+    }
+
+    .details-content {
+        width: 92vw;
+    }
+
+    .main-right {
+        width: 92vw;
+        height: auto;
+        max-height: 70vh;
+    }
+
+    .info-bar {
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .main-right-group {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px 0;
+    }
+
+    .main-right-action {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+    }
+
+    .price {
+        margin: 0;
+    }
+
+    .modal-content {
+        width: 80%;
+        margin: 15% auto;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .main {
+        padding: 2vh 2vw;
+    }
+
+    .main-left-image {
+        width: 96vw;
+        height: 30vh;
+    }
+
+    .details-content {
+        width: 96vw;
+    }
+
+    .main-right {
+        width: 96vw;
+    }
+
+    .main-left-heading {
+        font-size: 1.5rem;
+        margin: 20px 0;
+    }
+
+    .info-sub-heading {
+        font-size: 0.9rem;
+    }
+
+    .details-content {
+        font-size: 0.9rem;
+    }
+
+    .modal-content {
+        width: 90%;
+        padding: 15px;
+        margin: 20% auto;
+    }
+
+    .heaindg-modal {
+        font-size: 1.2rem;
+    }
+
+    .modal-details {
+        font-size: 0.9rem;
+    }
+
+    .close {
+        font-size: 24px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .navbar {
+        padding: 15px;
+    }
+
+    .heading {
+        font-size: 1.5rem;
+    }
+
+    .heading-hero-main {
+        font-size: 2rem;
+    }
+
+    .search-heading {
+        font-size: 1.2rem;
+        text-align: center;
+    }
+
+    .search-elements {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .search-bar input {
+        width: 80vw;
+        margin: 0;
+    }
+
+    .restaurants {
+        margin: 2rem 1rem;
+    }
+
+    .res-image {
+        height: 200px;
+    }
+
+    .page_control {
+        margin: 1rem;
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .hero-heading {
+        font-size: 2rem;
+    }
+
+    .sub-heading {
+        font-size: 1rem;
+    }
+}

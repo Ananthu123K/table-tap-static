@@ -188,3 +188,140 @@
     width: 20vw;
     cursor: pointer;
 }
+
+/* Responsive Styles */
+@media screen and (max-width: 768px) {
+    .hero {
+        max-height: 60vh;
+        padding: 20px;
+        text-align: center;
+    }
+
+    .hero-heading {
+        font-size: 3rem;
+    }
+
+    .contact {
+        height: auto;
+        padding: 50px 20px;
+    }
+
+    .name-email {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .name-email input {
+        width: 90vw;
+        margin: 10px 0;
+    }
+
+    .subject {
+        width: 90vw;
+    }
+
+    .contact textarea {
+        width: 90vw;
+    }
+
+    .submit {
+        width: 50vw;
+    }
+
+    .contact-heading {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    .contact-sub-heading {
+        text-align: center;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero {
+        max-height: 50vh;
+    }
+
+    .hero-heading {
+        font-size: 2.5rem;
+    }
+
+    .hero-sub-heading {
+        font-size: 0.9rem;
+    }
+
+    .contact {
+        padding: 30px 15px;
+    }
+
+    .contact-heading {
+        font-size: 1.5rem;
+    }
+
+    .name-email input {
+        width: 95vw;
+        padding: 15px 10px;
+    }
+
+    .subject {
+        width: 95vw;
+        padding: 15px 10px;
+    }
+
+    .contact textarea {
+        width: 95vw;
+    }
+
+    .submit {
+        width: 80vw;
+    }
+}
+
+/* Menu Toggle Styles */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-list {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+    }
+
+    .button-list-navbar {
+        display: none;
+    }
+}

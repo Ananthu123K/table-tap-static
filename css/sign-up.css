@@ -182,3 +182,178 @@
 button {
     cursor: pointer;
 }
+
+/* Responsive Styles */
+@media screen and (max-width: 1200px) {
+    .hero {
+        margin: 0 20px;
+    }
+
+    .hero-left {
+        padding-left: 5vw;
+    }
+
+    .hero-right {
+        padding-right: 5vw;
+    }
+
+    .hero-left input {
+        width: 35vw;
+    }
+
+    .btn-sign {
+        width: 15vw;
+    }
+
+    .auth-illus {
+        width: 400px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    * {
+        overflow-y: auto;
+    }
+
+    .main {
+        height: 100%;
+        min-height: 100vh;
+        overflow-y: auto;
+    }
+
+    .hero {
+        grid-template-columns: 1fr;
+        margin: 0;
+        height: auto;
+        padding: 20px;
+        min-height: 80vh;
+    }
+
+    .hero-left {
+        padding: 20px;
+        order: 2;
+        align-items: center;
+        text-align: center;
+        height: auto;
+        justify-content: flex-start;
+    }
+
+    .hero-right {
+        order: 1;
+        width: 100%;
+        padding: 20px;
+    }
+
+    .auth-illus {
+        width: 300px;
+    }
+
+    .hero-left input {
+        width: 80vw;
+    }
+
+    .btn-sign {
+        width: 200px;
+        margin: 20px 0;
+    }
+
+    .sign-in-heading {
+        font-size: 1.8rem;
+        text-align: center;
+    }
+
+    #loading-overlay {
+        line-height: normal;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    #loading-overlay p {
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .hero-left {
+        padding: 10px;
+    }
+
+    .auth-illus {
+        width: 250px;
+    }
+
+    .hero-left input {
+        width: 90vw;
+        padding: 15px 10px;
+        margin-bottom: 10px;
+    }
+
+    .sign-in-heading {
+        font-size: 1.5rem;
+    }
+
+    .hero-left label {
+        font-size: 0.9rem;
+        margin: 15px 0 10px 0;
+    }
+
+    .sub-heading-sign-in {
+        font-size: 0.9rem;
+    }
+
+    .btn-sign {
+        width: 180px;
+    }
+
+    #loading-overlay p {
+        font-size: 1.5rem;
+    }
+}
+
+/* Menu Toggle Styles */
+.menu-toggle {
+    display: none;
+    flex-direction: column;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.menu-toggle span {
+    width: 25px;
+    height: 3px;
+    background-color: #000;
+    margin: 2px 0;
+    transition: all 0.3s ease;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-list {
+        display: none;
+        position: fixed;
+        top: 80px;
+        left: 0;
+        width: 100%;
+        background: white;
+        flex-direction: column;
+        padding: 20px 0;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        z-index: 1000;
+    }
+
+    .nav-list.active {
+        display: flex;
+    }
+
+    .nav-list li {
+        margin: 10px 0;
+    }
+
+    .button-list-navbar {
+        display: none;
+    }
+}

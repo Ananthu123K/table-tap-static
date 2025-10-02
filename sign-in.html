@@ -3,13 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/sign-in.css" />
+    <link rel="stylesheet" href="css/sign-in.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
     <title>Sign In</title>
   </head>
   <body>
     <section class="main">
       <nav class="navbar">
             <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-list">
               <li><a href="/" class="item">Home</a></li>
               <li><a href="/booking.html" class="item">Book Now</a></li>
@@ -22,6 +28,16 @@
                 </button>
             </div>
           </nav>
+          <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const menuToggle = document.querySelector('.menu-toggle');
+                const navList = document.querySelector('.nav-list');
+                
+                menuToggle.addEventListener('click', () => {
+                    navList.classList.toggle('active');
+                });
+            });
+          </script>
       <div class="hero">
         <div class="hero-left">
           <h1 class="heading sign-in-heading">Sign In</h1>

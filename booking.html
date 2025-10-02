@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="css/booking.css" />
+    <link rel="stylesheet" href="css/booking.css" />
+    <link rel="stylesheet" href="css/responsive.css" />
     <title>Table Tap</title>
     <script>
       let signedIn = false; // Default to not signed in for static version
@@ -20,9 +21,14 @@
     </script>
   </head>
   <body>
-    <main class="hero">
+    <main class="hero booking-hero">
       <nav class="navbar">
             <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-list">
               <li><a href="/" class="item">Home</a></li>
               <li><a href="/booking.html" class="item">Book Now</a></li>
@@ -34,9 +40,16 @@
                   <a href="/sign-in.html" class="nav-button btn">Sign In</a>
                 </button>
             </div>
-            </ul>
           </nav>
-      <section class="hero-main">
+          <script>
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navList = document.querySelector('.nav-list');
+            
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+          </script>
+      <section class="hero-main booking-hero-main">
         <h1 class="heading heading-hero-main">Booking</h1>
         <h3 class="sub-heading">Our restaurants</h3>
       </section>

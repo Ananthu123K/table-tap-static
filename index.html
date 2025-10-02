@@ -1,16 +1,21 @@
-<!-- This is index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/responsive.css">
     <title>Table Tap</title>
 </head>
 <body>
     <main class="hero">
         <nav class="navbar">
             <h1 class="heading navbar-heading">Table <span>Tap</span></h1>
+            <div class="menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
             <ul class="nav-list">
               <li><a href="/" class="item">Home</a></li>
               <li><a href="/booking.html" class="item">Book Now</a></li>
@@ -23,6 +28,14 @@
                 </button>
             </div>
           </nav>
+          <script>
+            const menuToggle = document.querySelector('.menu-toggle');
+            const navList = document.querySelector('.nav-list');
+            
+            menuToggle.addEventListener('click', () => {
+                navList.classList.toggle('active');
+            });
+          </script>
         <section class="hero-main">
             <div class="hero-main-left">
                 <div class="tag">
